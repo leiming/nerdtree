@@ -147,6 +147,7 @@ command! -n=0 -bar NERDTreeClose :call nerdtree#closeTreeIfOpen()
 command! -n=1 -complete=customlist,nerdtree#completeBookmarks -bar NERDTreeFromBookmark call g:NERDTreeCreator.CreatePrimary('<args>')
 command! -n=0 -bar NERDTreeMirror call g:NERDTreeCreator.CreateMirror()
 command! -n=0 -bar NERDTreeFind call nerdtree#findAndRevealPath()
+command! -n=0 -bar VJNERDTreeRefresh call NERDTreeRefresh()
 command! -n=0 -bar NERDTreeFocus call NERDTreeFocus()
 command! -n=0 -bar NERDTreeCWD call NERDTreeCWD()
 " SECTION: Auto commands {{{1
@@ -187,6 +188,11 @@ endfunction
 
 function! NERDTreeRender()
     call nerdtree#renderView()
+endfunction
+
+function! NERDTreeRefresh()
+    call NERDTreeFocus()
+    call nerdtree#refreshRoot()
 endfunction
 
 function! NERDTreeFocus()

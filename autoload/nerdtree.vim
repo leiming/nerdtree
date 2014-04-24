@@ -57,6 +57,18 @@ function! nerdtree#compareNodes(n1, n2)
     return a:n1.path.compareTo(a:n2.path)
 endfunction
 
+" modified
+function! nerdtree#createVJBindings(key) 
+    let s = '<SNR>' . s:SID() . '_'
+
+    call NERDTreeAddKeyMap({ 'key': a:key, 'scope': "DirNode", 'callback': s."activateDirNode" })
+    call NERDTreeAddKeyMap({ 'key': a:key, 'scope': "FileNode", 'callback': s."activateFileNode" })
+    call NERDTreeAddKeyMap({ 'key': a:key, 'scope': "Bookmark", 'callback': s."activateBookmark" })
+    call NERDTreeAddKeyMap({ 'key': a:key, 'scope': "all", 'callback': s."activateAll" })
+endfunction
+" endmodified
+
+
 " FUNCTION: nerdtree#createDefaultBindings() {{{2
 function! nerdtree#createDefaultBindings()
     let s = '<SNR>' . s:SID() . '_'
@@ -245,6 +257,13 @@ function! nerdtree#postSourceActions()
     call g:NERDTreeBookmark.CacheBookmarks(0)
     call nerdtree#createDefaultBindings()
 
+    if exists("g:vj_nerdtree_compatible") 
+       if g:vj_nerdtree_compatible
+            call nerdtree#createVJBindings("l")
+            call nerdtree#createVJBindings("<Right>")
+            call nerdtree#createVJBindings("<Space>")
+       endif 
+    endif
     "load all nerdtree plugins
     runtime! nerdtree_plugin/**/*.vim
 endfunction
@@ -1283,6 +1302,10 @@ function! nerdtree#revealBookmark(name)
     catch /^NERDTree.BookmarkNotFoundError/
         call nerdtree#echo("Bookmark isnt cached under the current root")
     endtry
+endfunction
+
+function! nerdtree#refreshRoot()
+    call s:refreshRoot()
 endfunction
 
 " FUNCTION: s:refreshRoot() {{{2
