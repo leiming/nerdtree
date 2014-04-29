@@ -98,15 +98,22 @@ else
     call s:initVariable("g:NERDTreeCopyCmd", 'cp -r ')
 endif
 
+if exists("g:vj_nerdtree_compatible") 
+    if g:vj_nerdtree_compatible
+        call s:initVariable("g:NERDTreeMapActivateNode", "l")
+        call s:initVariable("g:NERDTreeMapMenu", "o")
+    else
+        call s:initVariable("g:NERDTreeMapActivateNode", "o")
+        call s:initVariable("g:NERDTreeMapMenu", "m")
+    endif
+endif
 
 "SECTION: Init variable calls for key mappings {{{2
-call s:initVariable("g:NERDTreeMapActivateNode", "o")
 call s:initVariable("g:NERDTreeMapChangeRoot", "C")
 call s:initVariable("g:NERDTreeMapChdir", "cd")
 call s:initVariable("g:NERDTreeMapCloseChildren", "X")
 call s:initVariable("g:NERDTreeMapCloseDir", "x")
 call s:initVariable("g:NERDTreeMapDeleteBookmark", "D")
-call s:initVariable("g:NERDTreeMapMenu", "m")
 call s:initVariable("g:NERDTreeMapHelp", "?")
 call s:initVariable("g:NERDTreeMapJumpFirstChild", "K")
 call s:initVariable("g:NERDTreeMapJumpLastChild", "J")
