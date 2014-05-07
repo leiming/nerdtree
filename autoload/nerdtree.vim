@@ -68,10 +68,18 @@ function! nerdtree#createVJBindings(key)
 endfunction
 " endmodified
 
-
 " FUNCTION: nerdtree#createDefaultBindings() {{{2
 function! nerdtree#createDefaultBindings()
     let s = '<SNR>' . s:SID() . '_'
+
+    if exists("g:vj_nerdtree_compatible") 
+        if g:vj_nerdtree_compatible
+            call NERDTreeAddKeyMap({ 'key': 'zc', 'scope': "Node", 'callback': s."closeCurrentDir" })
+            call NERDTreeAddKeyMap({ 'key': 'zo', 'scope': "DirNode", 'callback': s."activateDirNode" })
+            call NERDTreeAddKeyMap({ 'key': 'zn', 'scope': "all", 'callback': s."vjUnfoldingAll" })
+            call NERDTreeAddKeyMap({ 'key': 'zm', 'scope': "all", 'callback': s."vjFoldingAll" })
+        endif
+    endif
 
     call NERDTreeAddKeyMap({ 'key': '<MiddleRelease>', 'scope': "all", 'callback': s."handleMiddleMouse" })
     call NERDTreeAddKeyMap({ 'key': '<LeftRelease>', 'scope': "all", 'callback': s."handleLeftClick" })
@@ -256,13 +264,14 @@ endfunction
 function! nerdtree#postSourceActions()
     call g:NERDTreeBookmark.CacheBookmarks(0)
     call nerdtree#createDefaultBindings()
-if exists("g:vj_nerdtree_compatible") 
-       if g:vj_nerdtree_compatible
+    if exists("g:vj_nerdtree_compatible") 
+        if g:vj_nerdtree_compatible
             " call nerdtree#createVJBindings("l")
             call nerdtree#createVJBindings("<Right>")
             " call nerdtree#createVJBindings("<Space>")
-       endif 
+        endif
     endif
+    
     "load all nerdtree plugins
     runtime! nerdtree_plugin/**/*.vim
 endfunction
@@ -1397,6 +1406,20 @@ endfunction
 " FUNCTION: s:upDirCurrentRootClosed() {{{2
 function! s:upDirCurrentRootClosed()
     call nerdtree#upDir(0)
+endfunction
+
+" FUNCTION: s:vjUnfoldingAll {{{2
+function! s:vjUnfoldingAll()
+   :call s:jumpToRoot()
+   let currentNode = g:NERDTreeFileNode.GetSelected()
+   call s:openNodeRecursively(currentNode)
+endfunction
+
+" FUNCTION: s:vjFoldingAll {{{2
+function! s:vjFoldingAll()
+   :call s:jumpToRoot()
+   let currentNode = g:NERDTreeFileNode.GetSelected()
+   call s:closeChildren(currentNode)
 endfunction
 
 " vim: set sw=4 sts=4 et fdm=marker:
