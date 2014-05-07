@@ -88,7 +88,7 @@ endif
 call s:initVariable("g:NERDTreeWinPos", "left")
 call s:initVariable("g:NERDTreeWinSize", 31)
 
-"init the shell commands that will be used to copy nodes, and remove dir trees
+    "init the shell commands that will be used to copy nodes, and remove dir trees
 "
 "Note: the space after the command is important
 if nerdtree#runningWindows()
@@ -101,9 +101,11 @@ endif
 if exists("g:vj_nerdtree_compatible") 
     if g:vj_nerdtree_compatible
         call s:initVariable("g:NERDTreeMapActivateNode", "l")
+        call s:initVariable("g:NERDTreeMapToggleZoom", "<Space>")
         call s:initVariable("g:NERDTreeMapMenu", "o")
     else
         call s:initVariable("g:NERDTreeMapActivateNode", "o")
+        call s:initVariable("g:NERDTreeMapToggleZoom", "A")
         call s:initVariable("g:NERDTreeMapMenu", "m")
     endif
 endif
@@ -137,7 +139,6 @@ call s:initVariable("g:NERDTreeMapToggleBookmarks", "B")
 call s:initVariable("g:NERDTreeMapToggleFiles", "F")
 call s:initVariable("g:NERDTreeMapToggleFilters", "f")
 call s:initVariable("g:NERDTreeMapToggleHidden", "I")
-call s:initVariable("g:NERDTreeMapToggleZoom", "A")
 call s:initVariable("g:NERDTreeMapUpdir", "u")
 call s:initVariable("g:NERDTreeMapUpdirKeepOpen", "U")
 call s:initVariable("g:NERDTreeMapCWD", "CD")

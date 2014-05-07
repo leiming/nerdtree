@@ -256,12 +256,11 @@ endfunction
 function! nerdtree#postSourceActions()
     call g:NERDTreeBookmark.CacheBookmarks(0)
     call nerdtree#createDefaultBindings()
-
-    if exists("g:vj_nerdtree_compatible") 
+if exists("g:vj_nerdtree_compatible") 
        if g:vj_nerdtree_compatible
             " call nerdtree#createVJBindings("l")
             call nerdtree#createVJBindings("<Right>")
-            call nerdtree#createVJBindings("<Space>")
+            " call nerdtree#createVJBindings("<Space>")
        endif 
     endif
     "load all nerdtree plugins
