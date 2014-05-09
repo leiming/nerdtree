@@ -268,6 +268,7 @@ function! nerdtree#postSourceActions()
         if g:vj_nerdtree_compatible
             " call nerdtree#createVJBindings("l")
             call nerdtree#createVJBindings("<Right>")
+            call nerdtree#createVJBindings("<Left>")
             " call nerdtree#createVJBindings("<Space>")
         endif
     endif
